@@ -1,17 +1,16 @@
 package com.example.twitty
 
-import org.junit.Test
 
-import org.junit.Assert.assertEquals
+
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
+object Constants {
+    const val millis = 1000
+    const val targetValue = 0.7f
+    const val tension = 4f
+    const val timeDelay = 600L
 }
