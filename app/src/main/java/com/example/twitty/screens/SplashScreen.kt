@@ -13,12 +13,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
+import com.example.twitty.Constants.millis
+import com.example.twitty.Constants.targetValue
+import com.example.twitty.Constants.tension
+import com.example.twitty.Constants.timeDelay
 import com.example.twitty.R
 import com.example.twitty.screens.destinations.LoginScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.example.twitty.screens.destinations.PostScreenDestination
 import kotlinx.coroutines.delay
 
 @RootNavGraph(start = true )
@@ -32,15 +35,17 @@ fun SplashScreen(
     }
 
     LaunchedEffect(key1 = true){
+
         scale.animateTo(
-            targetValue =  0.7f,
+            targetValue =  targetValue,
             animationSpec = tween(
-                durationMillis = 1000,
+                durationMillis = millis,
                 easing ={
-                    OvershootInterpolator(4f).getInterpolation(it)
+                    OvershootInterpolator(tension).getInterpolation(it)
                 })
         )
-        delay(600L)
+
+        delay(timeDelay)
         navigator.navigate(LoginScreenDestination.route)
     }
     //Image
@@ -50,4 +55,6 @@ fun SplashScreen(
             modifier = Modifier.scale(scale.value))
 
     }
+
+
 }
