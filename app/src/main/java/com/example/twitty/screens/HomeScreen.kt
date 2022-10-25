@@ -13,7 +13,12 @@ import com.example.twitty.screens.destinations.PostScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-
+/**
+ * Home screen.
+ *
+ * @param navigator
+ * @author "Charlton."
+ */
 
 @Destination
 @Composable
