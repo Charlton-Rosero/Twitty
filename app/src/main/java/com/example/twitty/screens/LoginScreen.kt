@@ -16,7 +16,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
 
-
+//
 @Destination
 @Composable
 fun LoginScreen(
@@ -27,7 +27,7 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TextField(value = String, label = "username")
+//        TextField(value = String, label = "username")
         Button(onClick = {
             navigator.navigate(HomeScreenDestination.route)
         }) {
