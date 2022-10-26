@@ -4,9 +4,9 @@ package com.example.twitty
 
 
 /**
- * Example local unit test, which will execute on the development machine (host).
  *
- * See [testing documentation](http://d.android.com/tools/testing).
+ * Stupid Detekt
+ * Constant Variables .
  */
 object Constants {
     const val millis = 1000
