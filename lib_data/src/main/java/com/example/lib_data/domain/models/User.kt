@@ -13,8 +13,9 @@ package com.example.lib_data.domain.models
 
 data class User(
 val id: Long? = null,
-val name: String = "",
-val avatar: String = "",
-val username: String = "",
-val password: String = "",
+val name: String,
+val avatar: String,
+val username: String,
+val password: String ,
+
 )

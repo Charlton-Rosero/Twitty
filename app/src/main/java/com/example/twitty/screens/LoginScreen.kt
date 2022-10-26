@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.twitty.R
 import com.example.twitty.screens.destinations.HomeScreenDestination
 import com.example.twitty.screens.destinations.SignUpScreenDestination
@@ -27,10 +28,12 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
+
 @Destination
 @Composable
 fun LoginScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    viewModel: LoginScreenViewModel = hiltViewModel()
 ){
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -59,6 +62,10 @@ fun LoginScreen(
         )
         //
         Button(onClick = {
+            println("username:$username, password:$password")
+
+            viewModel.loginUser(username,password)
+
             navigator.navigate(HomeScreenDestination.route)
         }) {
             Text("Login")

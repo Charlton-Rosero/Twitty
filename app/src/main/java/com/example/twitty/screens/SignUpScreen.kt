@@ -17,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.lib_data.domain.models.User
 import com.example.twitty.R
 import com.example.twitty.screens.destinations.LoginScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -26,7 +28,8 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun SignUpScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    viewModel: SignUpScreenViewModel = hiltViewModel()
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -46,6 +49,7 @@ fun SignUpScreen(
             placeholder = { Text(text = "name") },
         )
         //
+        //
         var username by remember {
             mutableStateOf("")
         }
@@ -63,6 +67,8 @@ fun SignUpScreen(
         )
         //
         Button(onClick = {
+            println("username:$username, password:$password, name:$name")
+            viewModel.signUP(user = User(name = name, username = username, password =password, avatar = ""))
             navigator.navigate(LoginScreenDestination.route)
         }) {
             Text("Sign up")
