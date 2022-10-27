@@ -23,6 +23,8 @@ fun PostScreen(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
+
+
     ) {
         Text("Post Screen", textAlign = TextAlign.Center)
         Button(onClick = { navigator.navigate(HomeScreenDestination) }

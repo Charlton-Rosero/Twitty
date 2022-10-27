@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import com.example.twitty.screens.NavGraphs
 import com.example.twitty.ui.theme.TwittyTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  *
@@ -13,6 +14,7 @@ import com.ramcosta.composedestinations.DestinationsNavHost
  *
  */
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
