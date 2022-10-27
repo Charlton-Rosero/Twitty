@@ -39,7 +39,7 @@ class HomeScreenViewModel @Inject constructor(
             when(_post.value){
                 is Resource.Error -> {}
                 Resource.Loading -> {}
-                is Resource.Success -> println((_post.value as Resource.Success<List<Post>>).data)
+                is Resource.Success -> (_post.value as Resource.Success<List<Post>>).data
                 null -> TODO()
             }
         }

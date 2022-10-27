@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -18,9 +20,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.lib_data.domain.models.Post
+import com.example.lib_data.util.Resource
 import com.example.twitty.R
 import com.example.twitty.screens.destinations.LoginScreenDestination
 import com.example.twitty.screens.destinations.PostScreenDestination
@@ -39,10 +42,8 @@ fun HomeScreen(
     viewModel: HomeScreenViewModel = hiltViewModel()
 ){
     val some = viewModel.post.collectAsState().value
-    println(some)
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    println("POST OVER HERE $some")
+    Column() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -50,7 +51,6 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
 
             ) {
-
             Image(
                 painterResource(R.drawable.twitterlogo),
                 modifier = Modifier.size(55.dp),
@@ -63,30 +63,52 @@ fun HomeScreen(
             }
 
         }
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            item { Dummy(navigator) }
+        if(some != null){
+            LazyColumn(
+            ) {
+               when(some){
+                   is Resource.Error -> {}
+                   Resource.Loading -> {}
+                   is Resource.Success ->
+                      items(some.data){ something ->
+                          Stuff(something, navigator)
 
+                      }
+               }
+
+            }
         }
     }
 }
 
 
 @Composable
-fun Dummy(
+fun Stuff(
+    data: Post,
     navigator: DestinationsNavigator
 ){
+
     Card(
-        modifier = Modifier.clickable { navigator.navigate(PostScreenDestination.route) }
+        modifier = Modifier
+            .width(1000.dp)
+            .height(250.dp)
+            .clickable {
+                navigator.navigate(PostScreenDestination.route)
+            }
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Home Screen", textAlign = TextAlign.Center)
+            Text(
+                text = "@${data.username}"
+            )
+            Text(
+                text = data.content)
         }
 
     }
+
 }
+
