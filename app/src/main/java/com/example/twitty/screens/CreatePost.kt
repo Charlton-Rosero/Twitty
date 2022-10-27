@@ -11,6 +11,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.lib_data.domain.models.PostModel
+import com.example.lib_data.util.Resource
 import com.example.twitty.R
 import com.example.twitty.screens.destinations.HomeScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -33,6 +36,15 @@ fun CreatePost(
     navigator: DestinationsNavigator,
     viewModel: CreatePostViewModel = hiltViewModel()
 ){
+    val newPost = viewModel.createPost.collectAsState().value
+    LaunchedEffect(key1 = newPost) {
+        when (newPost) {
+            is Resource.Error -> println("CustomPost Error!")
+            Resource.Loading -> println("CustomPost Loading...")
+            is Resource.Success -> navigator.navigate(HomeScreenDestination)
+            null -> {}
+        }
+    }
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -55,7 +67,9 @@ fun CreatePost(
         }
         TextField(
             value = content,
-            modifier = Modifier.width(280.dp).height(400.dp),
+            modifier = Modifier
+                .width(280.dp)
+                .height(400.dp),
             onValueChange = {content = it},
             placeholder = { Text(text = "Content") },
         )
@@ -64,7 +78,6 @@ fun CreatePost(
         Button(onClick = {
             if (username != "" && content != ""){
                 viewModel.createPost(post = PostModel(username = username, content = content))
-                navigator.navigate(HomeScreenDestination.route)
             }
             else{
                 Toast.makeText(context,"Cannot be empty",Toast.LENGTH_SHORT).show();

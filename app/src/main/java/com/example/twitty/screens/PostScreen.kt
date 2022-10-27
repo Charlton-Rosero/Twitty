@@ -43,60 +43,62 @@ fun PostScreen(
             null -> {}
         }
     }
+    viewModel.getPostById(newId)
+    val post = viewModel.post.collectAsState().value
+    LaunchedEffect(key1 = post) {
+        when (post) {
+            is Resource.Error -> {}
+            Resource.Loading -> {}
+            is Resource.Success -> println("Comments ${post.data}")
+            null -> {}
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(100.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(150.dp)
-                .border(width = 10.dp, color = Color.Gray),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Column(
-                horizontalAlignment = Alignment.Start
-            ) {
-                Text(
-                    text = "@username"
-                )
-            }
-            Text("THIS is a Post")
+        when (post) {
+            is Resource.Error -> {}
+            Resource.Loading -> {}
+            is Resource.Success -> PostDetail(data = post.data)
+            null -> {}
         }
+
         if (comments != null) {
             LazyColumn(
                 modifier = Modifier
-                    .height(700.dp)
+                    .height(300.dp)
+                    .border(10.dp, color = Color.Gray)
             ) {
-
-
                 when (comments) {
                     is Resource.Error -> {}
                     Resource.Loading -> {}
                     is Resource.Success ->
                         items(comments.data) { comments ->
-                            println("I AM A COMMENT ${comments.content}")
+                            Comment(data = comments)
 
                         }
                 }
             }
+
+
         }
 
     }
 }
 
 @Composable
-fun Stuff(
+fun Comment(
     data: Comment
 ) {
 
     Card(
         modifier = Modifier
             .width(1000.dp)
-            .height(150.dp)
+            .height(70.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -110,6 +112,26 @@ fun Stuff(
                 text = data.content
             )
         }
+    }
+
+}
+
+@Composable
+fun PostDetail(
+    data: Post
+) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(150.dp)
+            .border(width = 10.dp, color = Color.Gray),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Text(text = "@${data.username}")
+        Text(text = data.content)
     }
 
 }

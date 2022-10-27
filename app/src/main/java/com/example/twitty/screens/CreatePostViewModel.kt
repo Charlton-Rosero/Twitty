@@ -9,6 +9,7 @@ import com.example.lib_data.domain.models.datastore.DataSource
 import com.example.lib_data.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,6 +23,8 @@ class CreatePostViewModel@Inject constructor(
     private val store: DataSource
 ):ViewModel() {
     private val _createPost: MutableStateFlow<Resource<Post>?> = MutableStateFlow(null)
+
+    val createPost = _createPost.asStateFlow()
 
     /**
      *

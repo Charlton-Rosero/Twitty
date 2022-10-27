@@ -87,4 +87,16 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getPostById(token: String, id: Long): Resource<Post>  = withContext(Dispatchers.IO) {
+        return@withContext try{
+            val res = apiService.getPostById(token, id)
+            if (res.isSuccessful && res.body() != null) {
+                Resource.Success(res.body()!!)
+            } else {
+                Resource.Error("NICE IT'S BROKEN")
+            }
+        }catch (e:java.lang.Exception){
+            Resource.Error(e.message.toString())
+        }
+    }
 }
