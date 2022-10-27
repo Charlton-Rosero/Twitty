@@ -15,4 +15,14 @@ interface DataSource {
      *
      */
     suspend fun setDataStore(token: String)
+    /**
+     *
+     */
+    fun getId(): Flow<Int>
+    /**
+     *
+     */
+    suspend fun setId(id: Int)
+
+
 }

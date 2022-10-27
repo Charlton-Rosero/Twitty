@@ -2,6 +2,7 @@ package com.example.lib_data.data
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.lib_data.domain.models.datastore.DataSource
@@ -31,4 +32,15 @@ class DataStoreImpl @Inject constructor(private val context:Context): DataSource
         }
     }
 
+    override fun getId(): Flow<Int> {
+        return context.dataStore.data.map { preferences ->
+            preferences[intPreferencesKey("id")] ?: -1
+        }
+    }
+
+    override suspend fun setId(id: Int){
+        context.dataStore.edit { preferences ->
+            preferences[intPreferencesKey("id")] = id
+        }
+    }
 }

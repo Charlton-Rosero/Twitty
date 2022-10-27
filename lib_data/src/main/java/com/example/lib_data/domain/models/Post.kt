@@ -14,7 +14,7 @@ package com.example.lib_data.domain.models
  */
 
 data class Post(
-val id: Long? = null,
+val id: Int,
 val content: String ,
 val createdAt: String ,
 val updatedAt: String ,
