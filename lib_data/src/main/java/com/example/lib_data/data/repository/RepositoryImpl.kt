@@ -1,6 +1,7 @@
 package com.example.lib_data.data.repository
 
 import com.example.lib_data.data.ApiService
+import com.example.lib_data.domain.models.Post
 import com.example.lib_data.domain.models.Token
 import com.example.lib_data.domain.models.User
 import com.example.lib_data.repository.Repository
@@ -25,7 +26,7 @@ class RepositoryImpl @Inject constructor(
             if (res.isSuccessful && res.body() != null) {
                 Resource.Success(res.body()!!)
             } else {
-                Resource.Error("I AM BROKEN")
+                Resource.Error("I AM BROKEN MA DUDE")
             }
         }catch (e:java.lang.Exception){
                 Resource.Error(e.message.toString())
@@ -44,4 +45,18 @@ class RepositoryImpl @Inject constructor(
             Resource.Error(e.message.toString())
         }
     }
+
+    override suspend fun getPost(token: String): Resource<List<Post>>  = withContext(Dispatchers.IO) {
+        return@withContext try{
+            val res = apiService.getPost(token)
+            if (res.isSuccessful && res.body() != null) {
+                Resource.Success(res.body()!!)
+            } else {
+                Resource.Error("I AM BROKEN")
+            }
+        }catch (e:java.lang.Exception){
+            Resource.Error(e.message.toString())
+        }
+    }
+
 }

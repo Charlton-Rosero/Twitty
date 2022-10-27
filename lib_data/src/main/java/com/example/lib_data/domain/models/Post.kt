@@ -15,9 +15,9 @@ package com.example.lib_data.domain.models
 
 data class Post(
 val id: Long? = null,
-val content: String = "",
-val createdAt: String = "",
-val updatedAt: String = "",
+val content: String ,
+val createdAt: String ,
+val updatedAt: String ,
 val comments: MutableList<Comment> = mutableListOf(),
-val username: String = "",
+val username: String ,
 )

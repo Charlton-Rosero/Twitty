@@ -9,8 +9,8 @@ package com.example.twitty
  * Constant Variables .
  */
 object Constants {
-    const val millis = 1000
+    const val millis = 100
     const val targetValue = 0.7f
     const val tension = 4f
-    const val timeDelay = 600L
+    const val timeDelay = 100L
 }

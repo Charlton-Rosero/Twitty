@@ -1,5 +1,6 @@
 package com.example.lib_data.domain.models
 
+import com.google.gson.annotations.SerializedName
 
 /**
  * Token.
@@ -9,6 +10,8 @@ package com.example.lib_data.domain.models
  * @constructor Create empty Token.
  */
 data class Token(
+    @SerializedName("access_token")
     val accessToken: String,
+    @SerializedName("refresh_token")
     val refreshToken: String
 )
