@@ -19,7 +19,6 @@ class SignUpScreenViewModel @Inject constructor(
     private val repo: Repository
 ): ViewModel(){
     private val _sign: MutableStateFlow<Resource<User>?> = MutableStateFlow(null)
-
     val sign = _sign.asStateFlow()
 
     /**

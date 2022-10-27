@@ -25,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.lib_data.domain.models.Post
 import com.example.lib_data.util.Resource
 import com.example.twitty.R
+import com.example.twitty.screens.destinations.CreatePostDestination
 import com.example.twitty.screens.destinations.LoginScreenDestination
 import com.example.twitty.screens.destinations.PostScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -43,7 +44,9 @@ fun HomeScreen(
 ){
     val some = viewModel.post.collectAsState().value
     println("POST OVER HERE $some")
-    Column() {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -65,7 +68,11 @@ fun HomeScreen(
         }
         if(some != null){
             LazyColumn(
+                modifier = Modifier
+                    .height(700.dp)
             ) {
+
+
                when(some){
                    is Resource.Error -> {}
                    Resource.Loading -> {}
@@ -77,6 +84,11 @@ fun HomeScreen(
                }
 
             }
+        }
+        Button(onClick = {
+            navigator.navigate(CreatePostDestination.route)
+        }) {
+                Text(text = "Add Post")
         }
     }
 }
@@ -91,7 +103,7 @@ fun Stuff(
     Card(
         modifier = Modifier
             .width(1000.dp)
-            .height(250.dp)
+            .height(150.dp)
             .clickable {
                 navigator.navigate(PostScreenDestination.route)
             }
