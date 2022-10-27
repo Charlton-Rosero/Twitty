@@ -1,5 +1,6 @@
 package com.example.lib_data.repository
 
+import com.example.lib_data.domain.models.Comment
 import com.example.lib_data.domain.models.Post
 import com.example.lib_data.domain.models.PostModel
 import com.example.lib_data.domain.models.Token
@@ -28,4 +29,8 @@ interface Repository {
      *
      */
     suspend fun createPost(token: String, post: PostModel): Resource<Post>
+    /**
+     *
+     */
+    suspend fun getComment(token: String, id: Long): Resource<List<Comment>>
 }

@@ -1,6 +1,7 @@
 package com.example.lib_data.data.repository
 
 import com.example.lib_data.data.ApiService
+import com.example.lib_data.domain.models.Comment
 import com.example.lib_data.domain.models.Post
 import com.example.lib_data.domain.models.PostModel
 import com.example.lib_data.domain.models.Token
@@ -66,7 +67,20 @@ class RepositoryImpl @Inject constructor(
             if (res.isSuccessful && res.body() != null) {
                 Resource.Success(res.body()!!)
             } else {
-                Resource.Error("I AM BROKEN MAAN!!")
+                Resource.Error("I AM BROKEN MAH MAAN!!")
+            }
+        }catch (e:java.lang.Exception){
+            Resource.Error(e.message.toString())
+        }
+    }
+
+    override suspend fun getComment(token: String, id: Long): Resource<List<Comment>>  = withContext(Dispatchers.IO) {
+        return@withContext try{
+            val res = apiService.getComment(token, id)
+            if (res.isSuccessful && res.body() != null) {
+                Resource.Success(res.body()!!)
+            } else {
+                Resource.Error("IS BROKEN MAH DUDE")
             }
         }catch (e:java.lang.Exception){
             Resource.Error(e.message.toString())

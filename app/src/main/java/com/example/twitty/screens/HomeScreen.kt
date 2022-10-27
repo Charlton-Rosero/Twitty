@@ -1,6 +1,7 @@
 package com.example.twitty.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import com.example.twitty.R
 import com.example.twitty.screens.destinations.CreatePostDestination
 import com.example.twitty.screens.destinations.LoginScreenDestination
 import com.example.twitty.screens.destinations.PostScreenDestination
+import com.example.twitty.ui.theme.Gray
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -35,7 +37,6 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 /**
  *
  */
-
 @Destination
 @Composable
 fun HomeScreen(
@@ -45,13 +46,16 @@ fun HomeScreen(
     val some = viewModel.post.collectAsState().value
     println("POST OVER HERE $some")
     Column(
+        modifier = Modifier
+            .background(Gray),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 10.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
+                .padding(20.dp)
+                .background(Gray),
+            horizontalArrangement = Arrangement.SpaceBetween
 
             ) {
             Image(
@@ -105,7 +109,7 @@ fun Stuff(
             .width(1000.dp)
             .height(150.dp)
             .clickable {
-                navigator.navigate(PostScreenDestination.route)
+                navigator.navigate(PostScreenDestination(data.id.toString()))
             }
     ) {
         Column(

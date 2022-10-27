@@ -1,5 +1,6 @@
 package com.example.lib_data.data
 
+import com.example.lib_data.domain.models.Comment
 import com.example.lib_data.domain.models.Post
 import com.example.lib_data.domain.models.PostModel
 import com.example.lib_data.domain.models.Token
@@ -9,6 +10,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -29,6 +31,9 @@ interface ApiService {
 
     @POST("post")
     suspend fun createPost(@Header("Authorization") token: String, @Body post:PostModel): Response<Post>
+
+    @GET("posts/{id}/comments")
+    suspend fun getComment(@Header("Authorization") token: String, @Path("id") id: Long): Response<List<Comment>>
 
 
 }

@@ -15,7 +15,6 @@ import javax.inject.Inject
 
 /**
  *
- *
  */
 @HiltViewModel
 class CreatePostViewModel@Inject constructor(
