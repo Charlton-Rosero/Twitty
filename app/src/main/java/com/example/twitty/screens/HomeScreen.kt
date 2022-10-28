@@ -81,7 +81,6 @@ fun HomeScreen(
                    is Resource.Success ->
                       items(some.data){ something ->
                           Stuff(something, navigator)
-
                       }
                }
 

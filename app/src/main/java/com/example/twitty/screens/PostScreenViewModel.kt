@@ -29,6 +29,8 @@ class PostScreenViewModel @Inject constructor(
     private val _comment: MutableStateFlow<Resource<List<Comment>>?> = MutableStateFlow(null)
     val comment = _comment.asStateFlow()
 
+    private val _createComment: MutableStateFlow<Resource<Comment>?> = MutableStateFlow(null)
+    val createComment = _createComment.asStateFlow()
 
     private val _post: MutableStateFlow<Resource<Post>?> = MutableStateFlow(null)
     val post = _post.asStateFlow()
@@ -46,5 +48,14 @@ class PostScreenViewModel @Inject constructor(
             _post.value = repo.getPostById("Bearer $token", id)
         }
     }
+
+    fun createComment(comment: Comment){
+        viewModelScope.launch {
+            val token =  store.getDataStore().first()
+            _createComment.value = repo.createComment(token, comment)
+
+        }
+    }
+
 
 }

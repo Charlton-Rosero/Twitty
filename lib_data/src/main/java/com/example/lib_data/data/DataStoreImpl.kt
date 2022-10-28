@@ -32,15 +32,15 @@ class DataStoreImpl @Inject constructor(private val context:Context): DataSource
         }
     }
 
-    override fun getId(): Flow<Int> {
+    override fun getUser(): Flow<String> {
         return context.dataStore.data.map { preferences ->
-            preferences[intPreferencesKey("id")] ?: -1
+            preferences[stringPreferencesKey("username")] ?: ""
         }
     }
 
-    override suspend fun setId(id: Int){
+    override suspend fun setUser(username: String){
         context.dataStore.edit { preferences ->
-            preferences[intPreferencesKey("id")] = id
+            preferences[stringPreferencesKey("username")] = username
         }
     }
 }

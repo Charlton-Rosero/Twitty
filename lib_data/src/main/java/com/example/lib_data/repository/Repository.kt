@@ -37,5 +37,9 @@ interface Repository {
      *
      */
     suspend fun getPostById(token: String, id: Long): Resource<Post>
+    /**
+     *
+     */
+    suspend fun createComment(token: String, comment: Comment): Resource<Comment>
 
 }

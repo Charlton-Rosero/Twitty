@@ -99,4 +99,17 @@ class RepositoryImpl @Inject constructor(
             Resource.Error(e.message.toString())
         }
     }
+
+    override suspend fun createComment(token: String, comment: Comment): Resource<Comment>  = withContext(Dispatchers.IO) {
+        return@withContext try{
+            val res = apiService.createComment(token, comment)
+            if (res.isSuccessful && res.body() != null) {
+                Resource.Success(res.body()!!)
+            } else {
+                Resource.Error("NICE IT'S BROKEN")
+            }
+        }catch (e:java.lang.Exception){
+            Resource.Error(e.message.toString())
+        }
+    }
 }
