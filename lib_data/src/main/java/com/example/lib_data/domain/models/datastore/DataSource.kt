@@ -18,11 +18,11 @@ interface DataSource {
     /**
      *
      */
-    fun getId(): Flow<Int>
+    fun getUser(): Flow<String>
     /**
      *
      */
-    suspend fun setId(id: Int)
+    suspend fun setUser(username: String)
 
 
 }

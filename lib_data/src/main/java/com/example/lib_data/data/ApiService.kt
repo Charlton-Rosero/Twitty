@@ -36,4 +36,13 @@ interface ApiService {
     suspend fun getComment(@Header("Authorization") token: String, @Path("id") id: Long): Response<List<Comment>>
 
 
+    @GET("posts/{id}")
+    suspend fun getPostById(@Header("Authorization") token: String, @Path("id") id: Long): Response<Post>
+
+    @POST("post/comment")
+    suspend fun createComment(@Header("Authorization") token: String, @Body comment: Comment): Response<Comment>
+
+
+
+
 }

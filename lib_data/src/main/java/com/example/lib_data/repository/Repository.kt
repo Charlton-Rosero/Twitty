@@ -33,4 +33,13 @@ interface Repository {
      *
      */
     suspend fun getComment(token: String, id: Long): Resource<List<Comment>>
+    /**
+     *
+     */
+    suspend fun getPostById(token: String, id: Long): Resource<Post>
+    /**
+     *
+     */
+    suspend fun createComment(token: String, comment: Comment): Resource<Comment>
+
 }

@@ -33,7 +33,10 @@ class LoginScreenViewModel @Inject constructor(
             when(_user.value){
                 is Resource.Error -> println("ERROR!!!")
                 Resource.Loading -> println("Loading..")
-                is Resource.Success -> store.setDataStore((_user.value as Resource.Success<Token>).data.accessToken)
+                is Resource.Success -> {
+                    store.setDataStore((_user.value as Resource.Success<Token>).data.accessToken)
+                    store.setUser(username)
+                }
                 null -> {}
             }
         }

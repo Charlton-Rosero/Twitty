@@ -75,15 +75,12 @@ fun HomeScreen(
                 modifier = Modifier
                     .height(700.dp)
             ) {
-
-
                when(some){
                    is Resource.Error -> {}
                    Resource.Loading -> {}
                    is Resource.Success ->
                       items(some.data){ something ->
                           Stuff(something, navigator)
-
                       }
                }
 
@@ -106,14 +103,14 @@ fun Stuff(
 
     Card(
         modifier = Modifier
-            .width(1000.dp)
+            .width(410.dp)
             .height(150.dp)
             .clickable {
                 navigator.navigate(PostScreenDestination(data.id.toString()))
             }
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.width(200.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
