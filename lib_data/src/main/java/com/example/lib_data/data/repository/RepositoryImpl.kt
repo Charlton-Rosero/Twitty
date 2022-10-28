@@ -100,7 +100,10 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun createComment(token: String, comment: Comment): Resource<Comment>  = withContext(Dispatchers.IO) {
+    override suspend fun createComment(
+        token: String,
+        comment: Comment
+    ): Resource<Comment>  = withContext(Dispatchers.IO) {
         return@withContext try{
             val res = apiService.createComment(token, comment)
             if (res.isSuccessful && res.body() != null) {

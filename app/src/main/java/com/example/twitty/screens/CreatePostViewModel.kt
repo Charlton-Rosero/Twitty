@@ -29,10 +29,11 @@ class CreatePostViewModel@Inject constructor(
     /**
      *
      */
-    fun createPost(post: PostModel){
+    fun createPost(post: String){
         viewModelScope.launch {
             val token = store.getDataStore().first()
-            _createPost.value = repo.createPost("Bearer $token", post)
+            val user = store.getUser().first()
+            _createPost.value = repo.createPost("Bearer $token", PostModel(username = user, content = post))
             when(_createPost.value){
                 is Resource.Error -> println("ERROR!!!")
                 Resource.Loading -> println("Loading..")

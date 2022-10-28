@@ -23,7 +23,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.lib_data.domain.models.PostModel
 import com.example.lib_data.util.Resource
 import com.example.twitty.R
 import com.example.twitty.screens.destinations.HomeScreenDestination
@@ -54,14 +53,6 @@ fun CreatePost(
         Image(
             painterResource(R.drawable.twitterlogo) ,
             contentDescription ="logo" )
-        var username by remember {
-            mutableStateOf("")
-        }
-        TextField(value = username ,
-            onValueChange = {username = it},
-            placeholder = { Text(text = " @username") },
-        )
-        //
         var content by remember {
             mutableStateOf("")
         }
@@ -76,8 +67,9 @@ fun CreatePost(
         //
         val context = LocalContext.current
         Button(onClick = {
-            if (username != "" && content != ""){
-                viewModel.createPost(post = PostModel(username = username, content = content))
+            if (content != ""){
+                viewModel.createPost(post = content)
+                navigator.navigate(HomeScreenDestination.route)
             }
             else{
                 Toast.makeText(context,"Cannot be empty",Toast.LENGTH_SHORT).show();

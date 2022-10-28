@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lib_data.domain.models.Token
-import com.example.lib_data.domain.models.User
 import com.example.lib_data.domain.models.datastore.DataSource
 import com.example.lib_data.repository.Repository
 import com.example.lib_data.util.Resource

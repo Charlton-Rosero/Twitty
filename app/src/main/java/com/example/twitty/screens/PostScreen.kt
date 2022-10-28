@@ -1,9 +1,7 @@
 package com.example.twitty.screens
 
-import android.widget.EditText
 import android.widget.Toast
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,11 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.lib_data.domain.models.Comment
 import com.example.lib_data.domain.models.Post
-import com.example.lib_data.domain.models.PostModel
 import com.example.lib_data.util.Resource
-import com.example.twitty.screens.destinations.PostScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
 @Composable
@@ -60,6 +55,15 @@ fun PostScreen(
             is Resource.Error -> {}
             Resource.Loading -> {}
             is Resource.Success -> println("Comments ${post.data}")
+            null -> {}
+        }
+    }
+    val createComment = viewModel.createComment.collectAsState().value
+    LaunchedEffect(key1 = createComment) {
+        when (createComment) {
+            is Resource.Error -> {}
+            Resource.Loading -> {}
+            is Resource.Success -> println("Comments ${createComment.data}")
             null -> {}
         }
     }
@@ -94,14 +98,6 @@ fun PostScreen(
                 }
             }
         }
-        var username by remember {
-            mutableStateOf("")
-        }
-        TextField(value = username ,
-            onValueChange = {username = it},
-            placeholder = { Text(text = " @username") },
-        )
-        //
         var content by remember {
             mutableStateOf("")
         }
@@ -115,7 +111,16 @@ fun PostScreen(
         )
         val context = LocalContext.current
         Button(onClick = {
-            Toast.makeText(context,"Cannot be empty", Toast.LENGTH_SHORT).show()
+
+            if(content != ""){
+                viewModel.createComment(content = content, postId = newId)
+                content = ""
+            }
+            else{
+                Toast.makeText(context,"Cannot be empty", Toast.LENGTH_SHORT).show()
+            }
+
+
         }) {
             Text("Add Post")
         }
