@@ -23,27 +23,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lib_data.domain.models.Post
+import com.example.lib_data.domain.models.datastore.DataSource
 import com.example.lib_data.util.Resource
 import com.example.twitty.R
 import com.example.twitty.screens.destinations.CreatePostDestination
+import com.example.twitty.screens.destinations.EditPostDestination
+import com.example.twitty.screens.destinations.HomeScreenDestination
 import com.example.twitty.screens.destinations.LoginScreenDestination
 import com.example.twitty.screens.destinations.PostScreenDestination
 import com.example.twitty.ui.theme.Gray
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.flow.first
 
 
-/**
- *
- */
 @Destination
 @Composable
 fun HomeScreen(
     navigator: DestinationsNavigator,
     viewModel: HomeScreenViewModel = hiltViewModel()
 ){
-    val some = viewModel.post.collectAsState().value
+    var some = viewModel.post.collectAsState().value
     println("POST OVER HERE $some")
     Column(
         modifier = Modifier
@@ -70,22 +74,8 @@ fun HomeScreen(
             }
 
         }
-        if(some != null){
-            LazyColumn(
-                modifier = Modifier
-                    .height(700.dp)
-            ) {
-               when(some){
-                   is Resource.Error -> {}
-                   Resource.Loading -> {}
-                   is Resource.Success ->
-                      items(some.data){ something ->
-                          Stuff(something, navigator)
-                      }
-               }
+            SwipeToRefreshFunction( navigator = navigator, viewModel )
 
-            }
-        }
         Button(onClick = {
             navigator.navigate(CreatePostDestination.route)
         }) {
@@ -98,9 +88,10 @@ fun HomeScreen(
 @Composable
 fun Stuff(
     data: Post,
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    viewModel: HomeScreenViewModel = hiltViewModel()
 ){
-
+    val store: DataSource
     Card(
         modifier = Modifier
             .width(410.dp)
@@ -109,19 +100,81 @@ fun Stuff(
                 navigator.navigate(PostScreenDestination(data.id.toString()))
             }
     ) {
-        Column(
-            modifier = Modifier.width(200.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+        Row(
+            modifier = Modifier.width(410.dp),
+            horizontalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = "@${data.username}"
-            )
-            Text(
-                text = data.content)
+            Column(
+                modifier = Modifier
+                    .width(200.dp)
+                    .width(410.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "@${data.username}"
+                )
+                Text(
+                    text = data.content.toString())
+            }
+            Column(
+                modifier = Modifier
+                    .width(80.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.End
+
+            ) {
+                Button(
+                    onClick = {
+                        viewModel.deletePost(data.id.toLong(), data.username)
+                    }) {
+                    Text(text = "Delete")
+                }
+                Button(
+                    onClick = { navigator.navigate(EditPostDestination(data.id.toString(),data.content, data.username))
+                    }) {
+                    Text(text = "Edit")
+                }
+
+            }
+
         }
+
 
     }
 
 }
+
+@Composable
+fun SwipeToRefreshFunction(
+    navigator: DestinationsNavigator,
+    viewModel: HomeScreenViewModel = hiltViewModel()
+){
+    var some = viewModel.post.collectAsState().value
+    val isRefreshing = viewModel.isRefreshing.collectAsState().value
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
+
+    SwipeRefresh(
+        state = swipeRefreshState,
+        onRefresh = viewModel::refresh,
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .height(700.dp)
+        ) {
+            when (some) {
+                is Resource.Error -> {}
+                Resource.Loading -> {}
+                is Resource.Success ->
+                    items(some.data) { something ->
+                        Stuff(something, navigator, viewModel)
+                    }
+                null -> {}
+            }
+
+        }
+
+    }
+}
+
 

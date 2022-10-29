@@ -3,7 +3,9 @@ package com.example.lib_data.data.repository
 import com.example.lib_data.data.ApiService
 import com.example.lib_data.domain.models.Comment
 import com.example.lib_data.domain.models.Post
+import com.example.lib_data.domain.models.PostDelete
 import com.example.lib_data.domain.models.PostModel
+import com.example.lib_data.domain.models.PostUpdate
 import com.example.lib_data.domain.models.Token
 import com.example.lib_data.domain.models.User
 import com.example.lib_data.repository.Repository
@@ -110,6 +112,37 @@ class RepositoryImpl @Inject constructor(
                 Resource.Success(res.body()!!)
             } else {
                 Resource.Error("NICE IT'S BROKEN")
+            }
+        }catch (e:java.lang.Exception){
+            Resource.Error(e.message.toString())
+        }
+    }
+
+
+
+    override suspend fun deletePost(token: String, post: PostDelete): Resource<Any> = withContext(Dispatchers.IO) {
+        return@withContext try{
+            val res = apiService.deletePost(token, post)
+            if (res.isSuccessful && res.body() != null) {
+                Resource.Success(res.body()!!)
+            } else {
+                Resource.Error("I AM BROKEN MAH MAAN!!")
+            }
+        }catch (e:java.lang.Exception){
+            Resource.Error(e.message.toString())
+        }
+    }
+
+
+
+
+    override suspend fun postUpdate(token: String, post: PostUpdate): Resource<Any> = withContext(Dispatchers.IO) {
+        return@withContext try{
+            val res = apiService.updatePost(token, post)
+            if (res.isSuccessful && res.body() != null) {
+                Resource.Success(res.body()!!)
+            } else {
+                Resource.Error("I AM BROKEN MAH MAAN!!")
             }
         }catch (e:java.lang.Exception){
             Resource.Error(e.message.toString())

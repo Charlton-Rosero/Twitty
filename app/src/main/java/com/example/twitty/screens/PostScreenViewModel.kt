@@ -26,6 +26,8 @@ class PostScreenViewModel @Inject constructor(
     private val repo: RepositoryImpl,
     private val store: DataSource
 ):ViewModel(){
+
+
     private val _comment: MutableStateFlow<Resource<List<Comment>>?> = MutableStateFlow(null)
     val comment = _comment.asStateFlow()
 

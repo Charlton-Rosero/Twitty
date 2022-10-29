@@ -119,10 +119,8 @@ fun PostScreen(
             else{
                 Toast.makeText(context,"Cannot be empty", Toast.LENGTH_SHORT).show()
             }
-
-
         }) {
-            Text("Add Post")
+            Text("Add Comment")
         }
 
     }
