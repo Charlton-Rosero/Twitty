@@ -18,8 +18,7 @@ import com.example.twitty.Constants.targetValue
 import com.example.twitty.Constants.tension
 import com.example.twitty.Constants.timeDelay
 import com.example.twitty.R
-import com.example.twitty.screens.destinations.HomeScreenDestination
-//import com.example.twitty.screens.destinations.LoginScreenDestination
+import com.example.twitty.screens.destinations.LoginScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -47,7 +46,7 @@ fun SplashScreen(
         )
 
         delay(timeDelay)
-        navigator.navigate(HomeScreenDestination.route)
+        navigator.navigate(LoginScreenDestination.route)
     }
     //Image
     Box(contentAlignment =  Alignment.Center, modifier = Modifier.fillMaxSize()){

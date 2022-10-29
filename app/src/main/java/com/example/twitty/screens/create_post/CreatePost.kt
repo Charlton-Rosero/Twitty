@@ -1,4 +1,4 @@
-package com.example.twitty.screens
+package com.example.twitty.screens.create_post
 
 import android.widget.Toast
 import androidx.compose.foundation.Image

@@ -1,4 +1,4 @@
-package com.example.twitty.screens
+package com.example.twitty.screens.post_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

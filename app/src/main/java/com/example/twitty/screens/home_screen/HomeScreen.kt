@@ -1,4 +1,4 @@
-package com.example.twitty.screens
+package com.example.twitty.screens.home_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,14 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lib_data.domain.models.Post
 import com.example.lib_data.domain.models.datastore.DataSource
 import com.example.lib_data.util.Resource
 import com.example.twitty.R
 import com.example.twitty.screens.destinations.CreatePostDestination
 import com.example.twitty.screens.destinations.EditPostDestination
-import com.example.twitty.screens.destinations.HomeScreenDestination
 import com.example.twitty.screens.destinations.LoginScreenDestination
 import com.example.twitty.screens.destinations.PostScreenDestination
 import com.example.twitty.ui.theme.Gray
@@ -38,7 +36,6 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.flow.first
 
 
 @Destination

@@ -1,4 +1,4 @@
-package com.example.twitty.screens
+package com.example.twitty.screens.home_screen
 
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
