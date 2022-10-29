@@ -1,5 +1,5 @@
 # Twitty
-Very simple twitter android applicaton using jetpack compose. Backend is only running locally and is not posted here.
+Very simple twitter android applicaton using jetpack compose. Backend is only running locally and is not posted here(im not the owner).
 
 
 Wireframe:
