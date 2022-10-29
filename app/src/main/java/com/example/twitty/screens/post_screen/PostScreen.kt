@@ -29,6 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.lib_data.domain.models.Comment
 import com.example.lib_data.domain.models.Post
 import com.example.lib_data.util.Resource
+import com.example.twitty.screens.post_screen.PostScreenViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 
 @Destination
@@ -119,10 +120,8 @@ fun PostScreen(
             else{
                 Toast.makeText(context,"Cannot be empty", Toast.LENGTH_SHORT).show()
             }
-
-
         }) {
-            Text("Add Post")
+            Text("Add Comment")
         }
 
     }

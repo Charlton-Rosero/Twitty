@@ -1,9 +1,10 @@
-package com.example.twitty.screens
+package com.example.twitty.screens.create_post
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lib_data.data.repository.RepositoryImpl
 import com.example.lib_data.domain.models.Post
+import com.example.lib_data.domain.models.PostModel
 import com.example.lib_data.domain.models.datastore.DataSource
 import com.example.lib_data.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,30 +18,27 @@ import javax.inject.Inject
  *
  */
 @HiltViewModel
-class HomeScreenViewModel @Inject constructor(
+class CreatePostViewModel@Inject constructor(
     private val repo: RepositoryImpl,
     private val store: DataSource
-): ViewModel() {
-    private val _post: MutableStateFlow<Resource<List<Post>>?> = MutableStateFlow(null)
-    val post = _post.asStateFlow()
+):ViewModel() {
+    private val _createPost: MutableStateFlow<Resource<Post>?> = MutableStateFlow(null)
 
-    init{
-        getPost()
-    }
+    val createPost = _createPost.asStateFlow()
 
     /**
      *
-     *
      */
-    fun getPost(){
+    fun createPost(post: String){
         viewModelScope.launch {
             val token = store.getDataStore().first()
-            _post.value = repo.getPost("Bearer $token")
-            when(_post.value){
-                is Resource.Error -> {}
-                Resource.Loading -> {}
-                is Resource.Success -> (_post.value as Resource.Success<List<Post>>).data
-                null -> TODO()
+            val user = store.getUser().first()
+            _createPost.value = repo.createPost("Bearer $token", PostModel(username = user, content = post))
+            when(_createPost.value){
+                is Resource.Error -> println("ERROR!!!")
+                Resource.Loading -> println("Loading..")
+                is Resource.Success -> println("got em ${_createPost.value}")
+                null -> {}
             }
         }
     }

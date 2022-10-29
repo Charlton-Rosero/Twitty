@@ -1,4 +1,4 @@
-package com.example.twitty.screens
+package com.example.twitty.screens.login_screen
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel

@@ -1,4 +1,4 @@
-package com.example.twitty.screens
+package com.example.twitty.screens.edit_screen
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -11,8 +11,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,27 +21,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.lib_data.util.Resource
 import com.example.twitty.R
 import com.example.twitty.screens.destinations.HomeScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination
+
 @Composable
-fun CreatePost(
+@Destination
+fun EditPost(
+    id: String,
+    content: String,
+    username: String,
     navigator: DestinationsNavigator,
-    viewModel: CreatePostViewModel = hiltViewModel()
+    viewModel: EditPostViewModel = hiltViewModel()
 ){
-    val newPost = viewModel.createPost.collectAsState().value
-    LaunchedEffect(key1 = newPost) {
-        when (newPost) {
-            is Resource.Error -> println("CustomPost Error!")
-            Resource.Loading -> println("CustomPost Loading...")
-            is Resource.Success -> navigator.navigate(HomeScreenDestination)
-            null -> {}
-        }
-    }
+    val newId = id.toInt()
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -53,8 +46,9 @@ fun CreatePost(
         Image(
             painterResource(R.drawable.twitterlogo) ,
             contentDescription ="logo" )
+
         var content by remember {
-            mutableStateOf("")
+            mutableStateOf(content)
         }
         TextField(
             value = content,
@@ -68,7 +62,7 @@ fun CreatePost(
         val context = LocalContext.current
         Button(onClick = {
             if (content != ""){
-                viewModel.createPost(post = content)
+                viewModel.createPost(post = content, id = newId, username)
                 navigator.navigate(HomeScreenDestination.route)
             }
             else{
